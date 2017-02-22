@@ -1,0 +1,25 @@
+{
+  "ts_version": 1,
+  "name": "test scenario",
+  "first_id": "1",
+  "nodes": [
+    {
+      "id": "1",
+      "type": "user",
+      "header": "starts here!",
+      "version": 1,
+      "illustration": {},
+      "text": "we'll start here our journey into the world of non-linear stories. it shall be great!",
+      "choices": [
+        {
+          "id": "one",
+          "main": true,
+          "version": 1,
+          "header": "choose me!",
+          "text": "yeah, do it!",
+          "goto": { "node": "2" }
+        }
+      ]
+    }
+  ]
+}
