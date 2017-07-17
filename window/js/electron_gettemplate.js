@@ -1,0 +1,3 @@
+function getTemplate() {
+    ipcRenderer.send
+}

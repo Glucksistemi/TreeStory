@@ -4,11 +4,54 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="main.css">
+    <script>
+        const {ipcRenderer} = require('electron')
+    </script>
     <script src="js/vue.js"></script><!--todo: replace with minimized vue or make some mechanics to autoreplace-->
+    <script src="js/components.js"></script>
 </head>
 <body>
-<div class="maincontainer">
-    
+<div id="maincontainer">
+    <div id="headpanel">
+        <form name="open-file">
+            <input type="file" name="openfile" id="openfile"><button type="button" @click="openFile()">Отобразить</button>
+        </form>
+    </div>
+    <div id="field">
+        <navigation v-bind:history="history" v-bind:nodes="scenario.nodes" v-on:goto="openNode"></navigation>
+        <view_node v-bind:node="scenario.nodes[current]" v-on:goto="openNode"></view_node>
+    </div>
 </div>
+<script src="js/load.js"></script>
+<script>
+    let vue = new Vue({
+        el: '#maincontainer',
+        components: components,
+        data: {
+            current: scenario.first_id,
+            history: [scenario.first_id],
+            scenario: scenario
+        },
+        methods: {
+            openNode: function (id) {
+                this.history.push(id);
+                this.current = id
+            },
+            openFile: function () {
+                var vm = this
+                let fileinput = document.querySelector('#openfile');
+                let file = fileinput.files[0];
+                let reader = new FileReader()
+                reader.readAsText(file)
+                reader.onload = function (rd) {
+                    console.log(rd.target.result)
+                    vm.scenario = JSON.parse(rd.target.result)
+                    vm.current = vm.scenario.first_id
+                    vm.history = [vm.scenario.first_id]
+                }
+            }
+        }
+    })
+</script>
 </body>
 </html>

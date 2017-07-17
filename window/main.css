@@ -1,0 +1,73 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#maincontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    min-height: 100%;
+}
+
+#headpanel {
+    padding: 10px;
+    background-color: black;
+    flex-basis: 30px;
+    margin: 0 20px;
+}
+
+#field {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+    flex-basis: calc(100% - 50px);
+}
+.field-column {
+    background-color: #ebdead;
+    flex-grow: 1;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.field-column.node {
+    flex-grow: 3;
+    flex-basis: 60%;
+}
+
+.field-column.node div {
+    padding: 0 10px;
+}
+
+.choices-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+    margin-top: 10px;
+}
+
+.item-view {
+    flex-basis: 70%;
+}
+
+.choice {
+    background-color: bisque;
+    padding: 5px 30px;
+    margin: 0 10px;
+    flex-grow: 1;
+}
+
+.choice.main {
+    background-color: lightgreen;
+}
+
+img.illustration {
+    max-width: 300px;
+}
