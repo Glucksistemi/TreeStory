@@ -15,11 +15,14 @@
     <div id="headpanel">
         <form name="open-file">
             <input type="file" name="openfile" id="openfile"><button type="button" @click="openFile()">Отобразить</button>
+            <button @click="saveFile()">Сохранить</button>
         </form>
+        <div><button @click="changeMode()">Edit</button></div>
     </div>
     <div id="field">
-        <navigation v-bind:history="history" v-bind:nodes="scenario.nodes" v-on:goto="openNode"></navigation>
-        <view_node v-bind:node="scenario.nodes[current]" v-on:goto="openNode"></view_node>
+        <navigation v-bind:history="history" v-bind:nodes="scenario.nodes" v-if="shouldShowPanel('navigation')" v-on:goto="openNode"></navigation>
+        <view_node v-bind:node="scenario.nodes[current]" v-if="shouldShowPanel('view_node')" v-on:goto="openNode"></view_node>
+        <edit_node v-bind:node="scenario.nodes[current]" v-if="shouldShowPanel('edit_node')" v-on:goto="openNode"></edit_node>
     </div>
 </div>
 <script src="js/load.js"></script>
@@ -28,11 +31,18 @@
         el: '#maincontainer',
         components: components,
         data: {
+            mode: modes.default,
             current: scenario.first_id,
             history: [scenario.first_id],
             scenario: scenario
         },
         methods: {
+            shouldShowPanel: function (panel_name) {
+                return modes[this.mode].indexOf(panel_name) != -1
+            },
+            changeMode: function () {
+                if (this.mode == 'view') { this.mode = 'edit' } else { this.mode = 'view' }
+            },
             openNode: function (id) {
                 this.history.push(id);
                 this.current = id
@@ -49,6 +59,14 @@
                     vm.current = vm.scenario.first_id
                     vm.history = [vm.scenario.first_id]
                 }
+            },
+            saveFile: function () {
+                alert(JSON.stringify(this.scenario))
+            }
+        },
+        computed: {
+            nodes_id_list: function () {
+                return Object.keys(scenario.nodes)
             }
         }
     })

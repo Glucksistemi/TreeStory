@@ -53,10 +53,16 @@ var scenario = {
             "header": "final node!",
             "type": "user",
             "version": 1,
-            "test": "that's the end of story",
+            "text": "that's the end of story",
             "illustrations": [],
             "main": true,
             "choices": []
         }
     }
-}
+};
+
+var modes = {
+    default: "view",
+    view: ["navigation", "view_node"],
+    edit: ["navigation", "edit_node"]
+};
