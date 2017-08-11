@@ -22,7 +22,7 @@
     <div id="field">
         <navigation v-bind:history="history" v-bind:nodes="scenario.nodes" v-if="shouldShowPanel('navigation')" v-on:goto="openNode"></navigation>
         <view_node v-bind:node="scenario.nodes[current]" v-if="shouldShowPanel('view_node')" v-on:goto="openNode"></view_node>
-        <edit_node v-bind:node="scenario.nodes[current]" v-if="shouldShowPanel('edit_node')" v-on:goto="openNode"></edit_node>
+        <edit_node v-bind:node="scenario.nodes[current]" v-if="shouldShowPanel('edit_node')" v-on:goto="openNode" v-bind:nodelist="nodes_id_list"></edit_node>
     </div>
 </div>
 <script src="js/load.js"></script>
@@ -62,11 +62,35 @@
             },
             saveFile: function () {
                 alert(JSON.stringify(this.scenario))
+            },
+            newNode: function (choice) {
+                let id = String(+new Date) // +new Date gives us timestamp, so we'll use string timestanp as node id
+                this.$set(this.scenario.nodes, id, {
+                    "header": "",
+                    "text": "",
+                    "version": 0,
+                    "type": "user",
+                    "illustrations": [],
+                    "choices": []
+                })
+                if (choice) {
+                    choice[goto] = {
+                        "node": id
+                    }
+                }
             }
         },
         computed: {
-            nodes_id_list: function () {
-                return Object.keys(scenario.nodes)
+            nodes_choice_list: function () {
+                let ids = Object.keys(scenario.nodes)
+                let rt = [] //BUG ALERT!!!
+                ids.forEach(function (node, id) {
+                    rt.push({
+                        "id": id,
+                        "header": node.header
+                    })
+                })
+                return rt
             }
         }
     })

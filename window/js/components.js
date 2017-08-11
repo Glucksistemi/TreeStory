@@ -59,8 +59,9 @@ var components = {
         template: '<div class="field-column node"><div class="item-edit"> ' +
         '<div style="flex-basis: 5%"><span>Header:</span><input v-model="node.header"></div>' +
         '<div><h4>Text:</h4><p><textarea v-model="node.text"></textarea></p></div>' +
-        '</div></div>',
-        props: ['node'],
+        '</div class="chices-edit"><choice v-for="ch, index in node.choices" :info="ch" :key="index"></choice>' +
+        '<div class="choice"><button @click="newChoice()">New choice</button></div> </div>',
+        props: ['node', "nodelist"],
         components: {
             choice: {
                 template: '<div class="choice" v-bind:class="{main: info.main}">' +
@@ -68,7 +69,23 @@ var components = {
                 '<p><textarea v-model="info.text"></textarea></p>' +
                 '<p><select></select></p>' +
                 '<p><button>Удалить</button></p>' +
-                '</div>'
+                '</div>',
+                props: ['info']
+            }
+        },
+        methods: {
+            newChoice: function () {
+                this.node.choices.push({
+                    "header": "",
+                    "text": "",
+                    "version": 0,
+                    "illustrations": [],
+                    "main": false,
+                    "goto": {}
+                })
+            },
+            newNode: function (choice) {
+                
             }
         }
     }
